@@ -7,7 +7,7 @@ from pathlib import Path
 import config 
 
 
-def save_audio_to_npy(rawfilepath, npyfilepath, num_samples=59049):
+def save_audio_to_npy(rawfilepath, npyfilepath):
     ''' Save audio signal with sr=sample_rate to npy file 
     Args : 
         rawfilepath : path to the MTT audio files 
@@ -32,13 +32,13 @@ def save_audio_to_npy(rawfilepath, npyfilepath, num_samples=59049):
         audios = [audio for audio in os.listdir(Path(rawfilepath) / path) if audio.split(".")[-1] == 'mp3']
         for audio in audios :
             full_filename = os.path.join(rawfilepath, path, audio)
-            try:
+            #try:
                 y,sr = librosa.load(full_filename, sr=config.SR)
-                if len(y)/num_samples < 10:
+                if len(y)/self.NUM_SAMPLES < 10:
                     print ("There are less than 10 segments in this audio")
-            except:
-                print ("Cannot load audio {}".format(full_filename))
-                continue
+            #except:
+            print ("Cannot load audio {}".format(full_filename))
+            continue
 
             fn = audio.split(".")[0]
             np.save(Path(npyfilepath) / (path + '/' + fn + '.npy'), y)
@@ -65,6 +65,6 @@ def get_segment_from_npy(npyfile, segment_idx):
 
 if __name__ =='__main__':
     # read audio signal and save to npy format 
-    save_audio_to_npy(config.MTT_DIR, config.AUDIO_DIR, config.NUM_SAMPLES)
+    save_audio_to_npy(config.MTT_DIR, config.AUDIO_DIR)
     
 

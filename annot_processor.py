@@ -123,5 +123,5 @@ def split_data(filename, base_dir, ratio=0.2):
 
 if __name__ == "__main__":
     new_csvfile = reduce_to_N_tags(config.ANNOT_FILE, config.BASE_DIR)
-    split_data(new_csvfile, base_dir)
+    split_data(new_csvfile, config.BASE_DIR)
 
