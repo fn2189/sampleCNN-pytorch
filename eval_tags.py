@@ -22,6 +22,7 @@ torch.cuda.manual_seed(5)
 parser= argparse.ArgumentParser()
 parser.add_argument('--gpus', nargs='+', type=int, default=[])
 parser.add_argument('--mp3_file', type=str)
+parser.add_argument('--model-state', type=str, help='Path to the model state_file')
 args = parser.parse_args()
 print (args)
 
@@ -118,7 +119,8 @@ def predict_topN_tags(model, base_dir, song, N=5):
 
 
 if __name__ =='__main__':
-    saved_state = 'SampleCNN-singletag.pth'
+    #saved_state = 'SampleCNN-singletag.pth'
+    saved_state = args.model_state
     samplecnn_model = SampleCNN()
     model = load_model(samplecnn_model, saved_state)
     if multigpu : 
